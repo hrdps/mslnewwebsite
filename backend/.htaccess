@@ -1,0 +1,86 @@
+# BEGIN HMWP_RULES
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule ^([0-9a-zA-Z_-]+/)?admin/(.*) /wp-admin/$2 [QSA,L]
+RewriteRule ^([0-9a-zA-Z_-]+/)?newlogin$ /wp-login.php [QSA,L]
+RewriteRule ^([0-9a-zA-Z_-]+/)?newlogin/(.*) /wp-login.php$2 [QSA,L]
+RewriteRule ^([0-9a-zA-Z_-]+/)?lostpass$ /wp-login.php?action=lostpassword [QSA,L]
+RewriteRule ^([0-9a-zA-Z_-]+/)?register$ /wp-login.php?action=register [QSA,L]
+RewriteRule ^([0-9a-zA-Z_-]+/)?core/modules/1a03f1c702/(.*) /wp-content/plugins/akismet/$2 [QSA,L]
+RewriteRule ^([0-9a-zA-Z_-]+/)?core/modules/229158440e/(.*) /wp-content/plugins/tuxedo-big-file-uploads/$2 [QSA,L]
+RewriteRule ^([0-9a-zA-Z_-]+/)?core/modules/86d67fa569/(.*) /wp-content/plugins/./$2 [QSA,L]
+RewriteRule ^([0-9a-zA-Z_-]+/)?core/modules/d0f4711431/(.*) /wp-content/plugins/hide-my-wp/$2 [QSA,L]
+RewriteRule ^([0-9a-zA-Z_-]+/)?core/modules/47ef46cca3/(.*) /wp-content/plugins/jwt-authentication-for-wp-rest-api/$2 [QSA,L]
+RewriteRule ^([0-9a-zA-Z_-]+/)?core/modules/7fbca82cc2/(.*) /wp-content/plugins/wp-hide-security-enhancer/$2 [QSA,L]
+RewriteRule ^([0-9a-zA-Z_-]+/)?core/modules/a5c0d13761/(.*) /wp-content/plugins/oauth2-provider/$2 [QSA,L]
+RewriteRule ^([0-9a-zA-Z_-]+/)?core/modules/(.*) /wp-content/plugins/$2 [QSA,L]
+RewriteRule ^([0-9a-zA-Z_-]+/)?core/views/51a12ba5b2/design.css$ /wp-content/themes/twentytwentyfour/style.css [QSA,L]
+RewriteRule ^([0-9a-zA-Z_-]+/)?core/views/51a12ba5b2/(.*) /wp-content/themes/twentytwentyfour/$2 [QSA,L]
+RewriteRule ^([0-9a-zA-Z_-]+/)?core/views/a37e87dcf0/design.css$ /wp-content/themes/twentytwentythree/style.css [QSA,L]
+RewriteRule ^([0-9a-zA-Z_-]+/)?core/views/a37e87dcf0/(.*) /wp-content/themes/twentytwentythree/$2 [QSA,L]
+RewriteRule ^([0-9a-zA-Z_-]+/)?core/views/70da61391b/design.css$ /wp-content/themes/twentytwentytwo/style.css [QSA,L]
+RewriteRule ^([0-9a-zA-Z_-]+/)?core/views/70da61391b/(.*) /wp-content/themes/twentytwentytwo/$2 [QSA,L]
+RewriteRule ^([0-9a-zA-Z_-]+/)?core/views/(.*) /wp-content/themes/$2 [QSA,L]
+RewriteRule ^([0-9a-zA-Z_-]+/)?storage/(.*) /wp-content/uploads/$2 [QSA,L]
+RewriteRule ^([0-9a-zA-Z_-]+/)?core/(.*) /wp-content/$2 [QSA,L]
+RewriteRule ^([0-9a-zA-Z_-]+/)?lib/(.*) /wp-includes/$2 [QSA,L]
+RewriteRule ^([0-9a-zA-Z_-]+/)?comments/(.*) /wp-comments-post.php$2 [QSA,L]
+RewriteRule ^([0-9a-zA-Z_-]+/)?writer/(.*) /author/$2 [QSA,L]
+RewriteRule ^([0-9a-zA-Z_-]+/)?json/(.*) /wp-json/$2 [QSA,L]
+</IfModule>
+
+
+# END HMWP_RULES
+# BEGIN HMWP_VULNERABILITY
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{REQUEST_URI} !/wp-admin [NC]
+RewriteCond %{QUERY_STRING} ^author=\d+ [NC]
+RewriteRule ^(.*)$ - [L,R=404]
+</IfModule>
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{REMOTE_ADDR} ^35.214.130.87$ [NC,OR]
+RewriteCond %{REMOTE_ADDR} ^192.185.4.40$ [NC,OR]
+RewriteCond %{REMOTE_ADDR} ^15.235.50.223$ [NC,OR]
+RewriteCond %{REMOTE_ADDR} ^172.105.48.130$ [NC,OR]
+RewriteCond %{REMOTE_ADDR} ^167.99.233.123$ [NC,OR]
+RewriteCond %{HTTP_USER_AGENT} (wpthemedetector|builtwith|isitwp|wapalyzer|mShots|WhatCMS|gochyu|wpdetector|scanwp) [NC]
+RewriteRule ^(.*)$ - [L,R=404]
+</IfModule>
+
+<IfModule mod_headers.c>
+Header always unset x-powered-by
+Header always unset server
+ServerSignature Off
+</IfModule>
+
+<IfModule mod_headers.c>
+Header set Strict-Transport-Security "max-age=15768000;includeSubdomains"
+Header set Content-Security-Policy "object-src 'none'"
+Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+
+
+# END HMWP_VULNERABILITY
+# BEGIN WP Hide & Security Enhancer
+
+# END WP Hide & Security Enhancer
+
+# BEGIN WordPress
+# The directives (lines) between "BEGIN WordPress" and "END WordPress" are
+# dynamically generated, and should only be modified via WordPress filters.
+# Any changes to the directives between these markers will be overwritten.
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+
+# END WordPress
