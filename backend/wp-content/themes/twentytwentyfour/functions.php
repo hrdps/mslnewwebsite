@@ -216,7 +216,7 @@ add_filter('rest_authentication_errors', function($result) {
 
     // Allow access to the token generation endpoint
     $current_route = $_SERVER['REQUEST_URI'];
-    if (strpos($current_route, '/wp-json/jwt-auth/v1/token') !== false) {
+    if (strpos($current_route, '/json/jwt-auth/v1/token') !== false) {
         return $result;
     }
 
