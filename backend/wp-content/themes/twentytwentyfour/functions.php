@@ -247,3 +247,17 @@ add_filter('rest_authentication_errors', function($result) {
     );
 });
 
+
+function add_cors_headers() {
+    // Allow requests from your localhost frontend
+    header("Access-Control-Allow-Origin: http://localhost:5173");
+    header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+    header("Access-Control-Allow-Headers: Authorization, Content-Type");
+
+    // Handle preflight (OPTIONS) requests
+    if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+        header("HTTP/1.1 200 OK");
+        exit;
+    }
+}
+add_action('rest_api_init', 'add_cors_headers', 15);
